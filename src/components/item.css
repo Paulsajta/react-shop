@@ -1,0 +1,37 @@
+
+.card span {
+    font-size: 15px;
+}
+
+.item-info {
+    min-height: 250px;
+    display: flex;
+    flex-direction: column;
+}
+.card-content {
+    flex-grow: 1;
+    font-size: 12px;
+}
+
+.card .card-title {
+    font-size: 16px;
+}
+
+.card-action {
+    overflow: hidden;
+
+}
+.quantity {
+    text-align: center;
+}
+.quantity button {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.isInBasket {
+    color: brown;
+    text-align: center;
+
+}
+
