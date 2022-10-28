@@ -1,8 +1,19 @@
-import React from 'react';
+import React, {useContext} from 'react';
+import {customContext} from "../MyContext";
 
-function Dropped({pic}) {
+function Dropped() {
+
+    const {isDropped, droppedItem} = useContext(customContext)
+    let pic = ''
+    if (isDropped) {
+        pic = droppedItem.item.displayAssets[0].full_background
+    }
+
+
     return (
-        <div className='droppedPic'><img src={pic} alt="" className='dropped'/></div>
+        <div className='droppedPic'>
+            <img src={pic} alt="" className='dropped'/>
+        </div>
     );
 }
 

@@ -1,39 +1,39 @@
 import './CartStyle.css'
 import Dropped from "./Dropped";
-import {useEffect} from "react";
+import {useContext, useEffect} from "react";
+import {customContext} from "../MyContext";
+import {clear} from "@testing-library/user-event/dist/clear";
 
-function Cart({total, onClick, isDropped, cb, droppedItem = {}}) {
+function Cart({total}) {
 
     /**
      * @param droppedItem.displayAssets[0]  different pictures.
      * @param {{full_background : string}} data backgroundPic.
      */
 
-    let pic = ''
-    if (droppedItem) {
-        pic = droppedItem.displayAssets[0].full_background
-    }
+    const {onModal, setIsDropped, isDropped} = useContext(customContext)
 
-    // const [showDropped, setShowDropped] = useState(false)
 
     useEffect(() => {
         if (isDropped) {
-        const timerId = setInterval(() => {
-            cb()
+        const timerId = setTimeout(() => {
+            setIsDropped(false)
         }, 300)
 
             return () => {
-                clearInterval(timerId)
+                clearTimeout(timerId)
             }
         }
-    }, [droppedItem])
+    }, [isDropped])
 
     return (
-        <div className='cart' onClick={onClick}>
+        <>
+        <div className='cart' onClick={onModal}>
             <i className="medium material-icons" style={{borderBottom: '1px solid black'}}>shopping_basket</i>
             <p>{total}</p>
-            {isDropped ? <Dropped pic={pic}/> : ''}
         </div>
+            {isDropped ? <Dropped/> : ''}
+        </>
     );
 }
 

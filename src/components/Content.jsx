@@ -1,86 +1,16 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {API_URL} from "../config";
 import Preloader from "./Preloader";
 import GoodsList from "./GoodsList";
 import Cart from "./Cart";
 import ModalCart from "./ModalCart/ModalCart";
 import Basket from "./Basket/Basket";
+import {customContext} from "../MyContext";
 
-function Content(props) {
+function Content() {
 
-    const [goods, setGoods] = useState([])
-
-    const [loading, setLoading] = useState(false)
-
-    const [basket, setBasket] = useState({})
-    const [droppedItem, setDroppedItem] = useState('')
-    const [isDropped, setIsDropped] = useState(false)
-
+    const {setGoods, loading, setLoading, basket} = useContext(customContext)
     const [total,setTotal] = useState(0)
-    const [modalActive, setModalActive] = useState(false)
-
-
-    const addToBasket = (item, count) => {
-        const {mainId} = item
-
-        if (basket[`${mainId}`]) {
-            let count = basket[`${mainId}`].count + 1
-            setBasket({...basket, [`${mainId}`] : {item, count}})
-        }
-        else {
-            setBasket({...basket, [`${mainId}`]: {item,count}})
-        }
-        setDroppedItem(item)
-        setIsDropped(true)
-    }
-
-    const unDropped = () => {
-        setIsDropped(!isDropped)
-    }
-
-    const isItInBasket = (id) => {
-        if (basket[`${id}`]) {
-            return true
-        }
-    }
-
-    const onModal = () => {
-        setModalActive(true)
-    }
-
-    const offModal = () => {
-        document.querySelector('body').style.overflow = 'scroll'
-        setModalActive(false)
-    }
-
-    const deleteFromBasket = (id) => {
-        let resBasket = {...basket}
-        delete resBasket[`${id}`]
-        setBasket(resBasket)
-    }
-
-    const more = (id, item) => {
-        let count = basket[`${id}`].count + 1
-        setBasket({...basket, [`${id}`] : {item, count}})
-
-    }
-
-    const less = (id,item) => {
-        if (basket[`${id}`].count > 0) {
-            let count = basket[`${id}`].count - 1
-            setBasket({...basket, [`${id}`] : {item, count}})
-        }
-        else if (basket[`${id}`].count === 0){
-            deleteFromBasket(id)
-        }
-    }
-
-    const basketFunctions = {
-        deleteFromBasket,
-        more,
-        less,
-    }
-
 
     useEffect(() => {
         let sumItems = 0
@@ -107,21 +37,15 @@ function Content(props) {
 
     return (
         <>
-            <ModalCart active={modalActive} changeActive={offModal}>
-                <Basket basket={basket} cb={basketFunctions}/>
+            <ModalCart>
+                <Basket/>
             </ModalCart>
-            <Cart total={total} isDropped={isDropped} cb={unDropped} onClick={onModal} droppedItem={droppedItem}/>
+            <Cart total={total}/>
 
             {
                 loading
                     ? <Preloader/>
-                    : <GoodsList
-                        goods={goods}
-                        cb={addToBasket}
-                        isItInBasket={isItInBasket}
-                        basket={basket}
-                        {...props}
-                    />
+                    : <GoodsList/>
             }
         </>
     );

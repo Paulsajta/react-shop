@@ -1,18 +1,27 @@
+.droppedPic {
+    width: 60px;
+    text-align: center;
+    position: fixed;
+    right: 1rem;
+    top: 13rem
+}
+
 .dropped {
+
     width: 60px;
     border-radius: 25px;
-    animation: fade-in 300ms ease-in-out;
+    animation: fade-in 400ms ease-in-out;
 }
 
 
 @keyframes fade-in {
     from {
-        opacity: 0.3;
+        opacity: 1;
         transform: translateY(5rem);
 
     }
     to  {
-        opacity: 1;
+        opacity: 0.1;
         transform: translateY(-4.2rem);
         width: 20px;
     }

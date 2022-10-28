@@ -1,13 +1,15 @@
-import React, { useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import './item.css'
+import {customContext} from "../MyContext";
 
 
-function Item({elem, basket, cb}) {
+function Item({elem}) {
 
     /**
      * @param price.finalPrice prices for current item
      */
 
+    const {basket, addToBasket} = useContext(customContext)
 
     const {displayName, mainId, price, displayAssets, displayDescription} = elem
 
@@ -59,7 +61,7 @@ function Item({elem, basket, cb}) {
 
     useEffect(() => {
         if (count > 0) {
-            cb(elem, count)
+            addToBasket(elem, count)
             setCount(0)
             setInItemCount(0)
         }

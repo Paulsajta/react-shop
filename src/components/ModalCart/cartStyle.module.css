@@ -12,13 +12,11 @@
 .content {
     border-radius: 16px;
     width: 60%;
-    min-height: 250px;
     min-width: 300px;
 }
 .cartModal.active {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
     overflow: auto;
 }
